@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# ===========================
+# Налаштування
+# ===========================
+APP_DIR="$HOME/my_app"
+WIN_DESKTOP="/mnt/c/Users/bonda/Desktop"  # <- зміни на свій юзер у Windows
+APK_NAME="MyApp-0.1-debug.apk"
+PYTHON_VERSION="3.11"
+
+# ===========================
+# 1. Перевірка Python 3.11
+# ===========================
+if ! command -v python3.11 &> /dev/null
+then
+    echo "Python 3.11 не знайдено! Встанови його через deadsnakes PPA."
+    exit 1
+fi
+
+# ===========================
+# 2. Створення та активація віртуального середовища
+# ===========================
+cd $APP_DIR || { echo "Директорія $APP_DIR не знайдена!"; exit 1; }
+python3.11 -m venv venv
+source venv/bin/activate
+
+# ===========================
+# 3. Встановлення залежностей
+# ===========================
+pip install --upgrade pip setuptools wheel
+pip install cython
+pip install buildozer kivy kivymd
+
+# ===========================
+# 4. Ініціалізація Buildozer (якщо нема buildozer.spec)
+# ===========================
+if [ ! -f buildozer.spec ]; then
+    buildozer init
+    echo "buildozer.spec створено. Відредагуй android.api та android.ndk перед збіркою!"
+    exit 0
+fi
+
+# ===========================
+# 5. Збірка APK
+# ===========================
+#Ubuntu terminal
+
+echo "Починаємо збірку APK. Це може зайняти деякий час..."
+buildozer android debug
+
+# ===========================
+# 6. Копіювання APK на Windows Desktop
+# ===========================
+if [ -f bin/$APK_NAME ]; then
+    cp bin/$APK_NAME $WIN_DESKTOP/
+    echo "APK скопійовано на Desktop Windows: $WIN_DESKTOP/$APK_NAME"
+else
+    echo "APK не знайдено! Перевір збірку."
+fi
+
+echo "Готово!"

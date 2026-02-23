@@ -1,8 +1,3 @@
-import os
-os.environ['KIVY_GL_BACKEND'] = 'sdl2'
-os.environ['KIVY_GL_DEBUG'] = '1'
-from kivy.core.window import Window
-Window.backend = 'sdl2'
 
 import os
 import sys
