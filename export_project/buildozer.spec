@@ -1,67 +1,84 @@
 [app]
 
-# (str) Title of your application
+# ------------------------------
+# BASIC APP CONFIG
+# ------------------------------
+
 title = BookApp
-
-# (str) Package name
 package.name = bookapp
+package.domain = org.yevhenii
 
-# (str) Package domain (обов’язково змінити, якщо публікувати)
-package.domain = org.example
-
-# (str) Source code where the main.py lives
 source.dir = .
+source.include_exts = py,png,jpg,kv,atlas,json,ttf
 
-# (list) Source files to include (extensions)
-source.include_exts = py,png,jpg,kv,atlas
+version = 0.1
 
-# (list) Packages to include in the APK
-requirements = python3,kivy,kivymd,requests
-
-# (str) Icon of the app
-icon.filename = %(source.dir)s/icon.png
-
-# (str) Supported orientation: 'portrait', 'landscape', 'sensor'
 orientation = portrait
-
-# (bool) Fullscreen or not
 fullscreen = 0
 
-# (str) Presplash image
+icon.filename = %(source.dir)s/icon.png
 presplash.filename = %(source.dir)s/presplash.png
 
-# (str) Android API to target
+
+# ------------------------------
+# PYTHON / REQUIREMENTS
+# ------------------------------
+
+requirements = python3,kivy,kivymd,requests,plyer
+
+# Optional but safer for KivyMD
+android.gradle_dependencies = com.android.support:support-v4:28.0.0
+
+
+# ------------------------------
+# ANDROID CONFIG
+# ------------------------------
+
 android.api = 33
-
-# (int) Minimum API your APK will support
 android.minapi = 21
-
-# (int) Android SDK build tools version
 android.sdk = 33
-
-# (str) Android NDK version
 android.ndk = 25b
-
-# (int) Android NDK API to use
 android.ndk_api = 21
 
-# (str) Android entry point, default is ok
 android.entrypoint = org.kivy.android.PythonActivity
+android.theme = "@android:style/Theme.NoTitleBar"
 
-# (str) Android app theme, leave default
-android.theme = '@android:style/Theme.NoTitleBar'
-
-# (list) Permissions
 android.permissions = INTERNET,ACCESS_NETWORK_STATE
 
-# (bool) Copy library dependencies into APK
+android.use_sdl2 = True
 android.copy_libs = 1
-
-# (bool) Embed the private data folder in the APK
 android.private_storage = 1
 
-# (bool) Logcat filters
+
+# ------------------------------
+# PERFORMANCE & STABILITY
+# ------------------------------
+
 log_level = 2
 
-# (bool) Use SDL2 (recommended)
-android.use_sdl2 = True
+android.logcat_filters = *:S python:D
+
+# Avoid unnecessary rebuild issues
+android.allow_backup = False
+
+# Enable AndroidX (modern Android support)
+android.enable_androidx = True
+
+# ------------------------------
+# BUILD OPTIMIZATION
+# ------------------------------
+
+p4a.branch = stable
+
+# Reduce rebuild problems
+android.arch = arm64-v8a, armeabi-v7a
+
+# ------------------------------
+# RELEASE SIGNING
+# ------------------------------
+
+android.release_keystore = bookapp-release.keystore
+android.release_keyalias = bookapp
+
+android.release_keystore_password = 170788
+android.release_keyalias_password = 170788
