@@ -52,3 +52,4 @@ else
 fi
 
 echo -e "${GREEN}🎉 Локальні зміни успішно синхронізовані з GitHub!${NC}"
+chmod +x sync_with_github.sh
