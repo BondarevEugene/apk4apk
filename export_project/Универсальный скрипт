@@ -1,0 +1,64 @@
+'''швидкий автоматизований скрипт діагностики + збірки + переносу на емулятор,
+але з розділенням на етапи, щоб можна було побачити, чому додаток падає.
+Нижче bash-скрипт для WSL, який робить:
+Перевіряє Python-код локально (python3 main.py) і лог файли.
+Якщо локально все добре, збирає APK через Buildozer.
+Копіює APK у Windows.
+Встановлює на запущений емулятор і пробує запустити його.'''
+
+bash
+#!/bin/bash
+# =========================================
+# Auto-build & deploy Kivy app for emulator
+# =========================================
+
+APP_NAME="bookapp"
+APK_NAME="bookapp-0.1-arm64-v8a_armeabi-v7a-debug.apk"
+APK_PATH="./bin/$APK_NAME"
+WIN_DEST="/mnt/c/Users/bonda/Downloads/$APK_NAME"
+
+echo "=== STEP 1: Local Python check ==="
+if [ -f main.py ]; then
+    echo "Running main.py locally to check for errors..."
+    python3 main.py
+    PY_RET=$?
+    if [ $PY_RET -ne 0 ]; then
+        echo "ERROR: Python code crashed locally. Fix before building APK."
+        exit 1
+    else
+        echo "Local Python run OK."
+    fi
+else
+    echo "ERROR: main.py not found!"
+    exit 1
+fi
+
+echo "=== STEP 2: Build APK ==="
+echo "Cleaning previous builds..."
+buildozer android clean
+buildozer android debug
+if [ ! -f "$APK_PATH" ]; then
+    echo "ERROR: APK not found after build!"
+    exit 1
+fi
+echo "APK built: $APK_PATH"
+
+echo "=== STEP 3: Copy APK to Windows Downloads ==="
+cp "$APK_PATH" "$WIN_DEST"
+echo "APK copied to: $WIN_DEST"
+
+echo "=== STEP 4: Install on emulator ==="
+echo "Check for emulator..."
+EMU=$(adb devices | grep emulator)
+if [ -z "$EMU" ]; then
+    echo "No emulator running. Start emulator first!"
+    exit 1
+fi
+
+echo "Installing APK on emulator..."
+adb install -r "$APK_PATH"
+
+echo "Launching app..."
+adb shell monkey -p org.yevhenii.bookapp -c android.intent.category.LAUNCHER 1
+
+echo "=== DONE ==="

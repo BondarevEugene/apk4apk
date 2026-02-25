@@ -1,0 +1,59 @@
+Встановлення Buildozer безпосередньо на Windows — завдання не з легких, оскільки цей інструмент розроблений для Linux і потребує специфічних системних залежностей.
+
+Найкращий та найстабільніший спосіб використовувати Buildozer на Windows для тестування та збірки Linux/Android додатків — це використання WSL2 (Windows Subsystem for Linux).
+
+Крок 1: Встановлення WSL2 (Ubuntu)
+Якщо у вас ще не встановлено WSL, відкрийте PowerShell від імені адміністратора та виконайте:
+
+PowerShell
+wsl --install
+Після завершення перезавантажте комп'ютер. Ви отримаєте повноцінний термінал Ubuntu.
+
+Крок 2: Оновлення системи та встановлення залежностей
+Відкрийте встановлений термінал Ubuntu і виконайте оновлення пакетів:
+
+Bash
+sudo apt update && sudo apt upgrade -y
+Далі встановіть базові інструменти для роботи Python та Buildozer:
+
+Bash
+sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+Крок 3: Встановлення Buildozer
+Рекомендується встановлювати Buildozer через pip для вашого користувача:
+
+Bash
+pip3 install --user --upgrade buildozer
+pip3 install --user --upgrade cython virtualenv
+Додайте шлях до бінарних файлів у ваш профіль, щоб команда buildozer працювала всюди:
+
+Bash
+echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.bashrc
+source ~/.bashrc
+Крок 4: Підготовка проекту
+Перейдіть у папку з вашим Python-проектом (наприклад, де лежить ваш main.py на базі Kivy або KivyMD):
+
+Bash
+cd /шлях/до/вашого/проєкту
+buildozer init
+Це створить файл buildozer.spec, де ви можете налаштувати назву додатка, іконку та дозволи.
+
+Крок 5: Збірка додатка
+Для першої збірки (наприклад, під Android) виконайте:
+
+Bash
+buildozer -v android debug
+Важливо: Під час першого запуску Buildozer завантажить Android SDK, NDK та інші інструменти. Це може зайняти 15-30 хвилин і потребує стабільного інтернету.
+
+Поради для тестування Linux-додатків
+Якщо ваша мета — просто запускати Linux-версію додатка на Windows:
+
+WSLg: Сучасні версії Windows 10/11 підтримують графічні інтерфейси (WSLg). Ви можете просто запустити python3 main.py всередині WSL, і вікно додатка з'явиться на робочому столі Windows.
+
+VirtualBox: Якщо WSL2 не підходить, можна встановити повноцінну віртуальну машину з Ubuntu, де Buildozer працює "з коробки".
+
+Типові помилки та їх вирішення:
+Відсутність пам'яті: Buildozer потребує багато ОЗП під час збірки. Переконайтеся, що WSL має доступ хоча б до 4 ГБ оперативної пам'яті.
+
+Помилки Cython: Перевірте сумісність версій cython та kivy у файлі buildozer.spec.
+
+Хочете, щоб я допоміг налаштувати файл buildozer.spec саме під ваш проект?

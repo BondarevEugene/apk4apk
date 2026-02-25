@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 import os
 os.environ['KIVY_GL_BACKEND'] = 'sdl2'
 os.environ['KIVY_GL_DEBUG'] = '1'
 from kivy.core.window import Window
 Window.backend = 'sdl2'
+=======
+>>>>>>> 4cfe770f9b65e804c24ef2bc26f915413b59c8d5
 
 import os
 import sys
@@ -401,4 +404,8 @@ class BuilderApp(MDApp):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     BuilderApp().run()
+=======
+    BuilderApp().run()
+>>>>>>> 4cfe770f9b65e804c24ef2bc26f915413b59c8d5
