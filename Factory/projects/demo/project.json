@@ -1,0 +1,30 @@
+{
+  "app": {
+    "name": "DemoBook",
+    "version": "1.0"
+  },
+
+  "pages": [
+
+    {
+      "id": "page1",
+
+      "layout": "column",
+
+      "blocks": [
+
+        {
+          "type": "text",
+          "value": "Hello from Factory"
+        },
+
+        {
+          "type": "image",
+          "src": "media/test.jpg"
+        }
+
+      ]
+    }
+
+  ]
+}

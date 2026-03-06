@@ -1,0 +1,44 @@
+{
+  "app": {
+    "name": "DemoBook",
+    "package": "org.factory.demobook",
+    "version": "0.1"
+  },
+
+  "pages": [
+
+    {
+      "id": "page1",
+      "title": "Welcome",
+
+      "blocks": [
+
+        {
+          "type": "text",
+          "content": "Welcome to Factory!"
+        },
+
+        {
+          "type": "image",
+          "src": "media/image1.png"
+        }
+
+      ]
+    },
+
+    {
+      "id": "page2",
+      "title": "Video",
+
+      "blocks": [
+
+        {
+          "type": "video",
+          "src": "media/video.mp4"
+        }
+
+      ]
+    }
+
+  ]
+}

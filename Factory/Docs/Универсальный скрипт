@@ -62,3 +62,12 @@ echo "Launching app..."
 adb shell monkey -p org.yevhenii.bookapp -c android.intent.category.LAUNCHER 1
 
 echo "=== DONE ==="
+27/02/26
+added:
+• Парсить реальні % з Buildozer
+• Має подвійний прогрес (compile + packaging)
+• Пише лог у buildozer_build.log
+• Показує live preview
+• Автоматично переносить APK з WSL у Windows
+• Працює з debug і release
+• Автоінкремент версії

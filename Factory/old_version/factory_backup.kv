@@ -1,0 +1,25 @@
+ScreenManager:
+    MainScreen:
+
+<MainScreen>:
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: "Factory APK Builder"
+            font_size: 32
+
+        Button:
+            text: "Зібрати APK"
+            size_hint_y: None
+            height: 60
+
+        Button:
+            text: "Налаштування"
+
+        Button:
+            text: "Вихід"
+            on_press: app.stop()
