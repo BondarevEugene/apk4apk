@@ -1,0 +1,64 @@
+#:import StepWidget ui.widgets.StepWidget
+
+BoxLayout:
+
+    orientation: "vertical"
+
+    padding: 20
+    spacing: 20
+
+
+    Image:
+        source: "assets/phoenix.png"
+        size_hint_y: 0.3
+
+
+    ProgressBar:
+        id: progress
+        max: 100
+        value: 0
+
+
+    BoxLayout:
+
+        id: steps
+
+        orientation: "vertical"
+
+        StepWidget:
+            title: "Clean build"
+
+        StepWidget:
+            title: "Build APK"
+
+        StepWidget:
+            title: "Install APK"
+
+        StepWidget:
+            title: "Run App"
+
+
+    ScrollView:
+
+        TextInput:
+
+            id: log
+
+            size_hint_y: None
+
+            height: 600
+
+            readonly: True
+
+            font_size: 14
+
+
+    Button:
+
+        text: "BUILD APK"
+
+        size_hint_y: None
+
+        height: 60
+
+        on_release: app.start_build()
